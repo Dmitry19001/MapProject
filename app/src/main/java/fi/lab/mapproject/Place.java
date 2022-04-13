@@ -13,17 +13,17 @@ public class Place implements Comparable<Place>, Serializable {
     }
 
     public Place (int id, String name, float latitude, float longitude){
-        SetId(id);
-        SetName(name);
-        SetLat(latitude);
-        SetLong(longitude);
+        setId(id);
+        setName(name);
+        setLat(latitude);
+        setLong(longitude);
     }
 
-    public int GetId(){ return this.id; }
-    public void SetId(int id) { this.id = id; }
+    public int getId(){ return this.id; }
+    public void setId(int id) { this.id = id; }
 
-    public String GetName(){ return this.name; }
-    public void SetName(String name){
+    public String getName(){ return this.name; }
+    public void setName(String name){
         if (name.trim().length() > 0){
             this.name = name;
         }
@@ -32,18 +32,24 @@ public class Place implements Comparable<Place>, Serializable {
         }
     }
 
-    public float GetLong(){ return this.longitude; }
-    public void SetLong(float longitude){
+    public float getLong(){ return this.longitude; }
+    public void setLong(float longitude){
         this.longitude = longitude;
     }
 
-    public float GetLat(){ return this.latitude; }
-    public void SetLat(float latitude){
+    public float getLat(){ return this.latitude; }
+    public void setLat(float latitude){
         this.latitude = latitude;
     }
 
     @Override
+    public String toString(){
+        return String.format("[%s] %s [%s, %s]", getId(), getName(), getLat(), getLong());
+    }
+
+
+    @Override
     public int compareTo(Place place) {
-        return 0;
+        return this.toString().compareToIgnoreCase(place.toString());
     }
 }

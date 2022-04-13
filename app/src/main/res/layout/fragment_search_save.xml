@@ -21,6 +21,7 @@
         android:layout_marginTop="8dp"
         android:rotation="0"
         android:rotationX="0"
-        android:text="@string/SaveButtonText" />
+        android:text="@string/SaveButtonText"
+        android:onClick="saveToDB"/>
 
 </LinearLayout>

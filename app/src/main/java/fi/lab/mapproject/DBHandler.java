@@ -46,15 +46,15 @@ public class DBHandler extends SQLiteOpenHelper {
     public void addPlace(Place place){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //values.put(KEY_ID, contact.getId());
-        values.put(KEY_NAME, place.GetName());
-        values.put(KEY_LAT, place.GetLat());
-        values.put(KEY_LONG, place.GetLong());
+        values.put(KEY_NAME, place.getName());
+        values.put(KEY_LAT, place.getLat());
+        values.put(KEY_LONG, place.getLong());
         db.insert(TABLE_NAME, null, values);
     }
 
     public void deletePlace(Place place){
-
+        //TODO: OPTIONAL DELETING FROM DB
+        //NOT PRIORITISED BECAUSE IT'S EASIER TO DELETE AND SAVE WHOLE DB
     }
 
     public List<Place> getAllPlaces(){
