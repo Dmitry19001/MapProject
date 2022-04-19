@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 
 public class GMapsFragment extends Fragment {
 
     private SearchView searchView;
     GoogleMap mMap;
+
+
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -41,6 +45,27 @@ public class GMapsFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
+
+            //just for test
+            ArrayList<LatLng> locationArrayList = new ArrayList<>();
+            
+            LatLng Lahti_Sibelius = new LatLng(60.9948, 25.6520);
+            LatLng Lahti_Keskusta    = new LatLng(60.9816, 25.6601);
+            LatLng Lahti_Trio = new LatLng(60.9828, 25.6619);
+            LatLng Lahti_Salpaus = new LatLng(60.818522, 25.753588);
+
+            locationArrayList.add(Lahti_Sibelius);
+            locationArrayList.add(Lahti_Keskusta);
+            locationArrayList.add(Lahti_Trio);
+            locationArrayList.add(Lahti_Salpaus);
+
+
+            locationArrayList.forEach(( l->{
+                Log.i("myLocationArrayList", l.toString());
+                mMap.addMarker(new MarkerOptions().position(l).title(" Our Address"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(l));
+            }));
+
             //LAHTI 60.98543428468401, 25.663712747153326
             //LAB 61.00655692042178, 25.66437080484379
             LatLng lab = new LatLng(61.00655692042178, 25.66437080484379);
@@ -78,6 +103,7 @@ public class GMapsFragment extends Fragment {
                 // where we will store the list of all address.
                 List<Address> addressList = null;
 
+
                 // checking if the entered location is null or not.
                 if (location != null || location.equals("")) {
                     // on below line we are creating and initializing a geo coder.
@@ -89,6 +115,10 @@ public class GMapsFragment extends Fragment {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
+
+
+
                     // on below line we are getting the location
                     // from our list a first position.
                     if (addressList.size() > 0) {
