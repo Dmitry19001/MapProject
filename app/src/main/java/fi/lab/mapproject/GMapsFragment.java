@@ -47,23 +47,14 @@ public class GMapsFragment extends Fragment {
             mMap = googleMap;
 
             //just for test
-             ArrayList<LatLng> locationArrayList = new ArrayList<>();
             ArrayList<PlacePoint> placePointsArrayList = new ArrayList<>();
 
-             LatLng Lahti_Sibelius = new LatLng(60.9948, 25.6520);
-            LatLng Lahti_Keskusta    = new LatLng(60.9816, 25.6601);
-            LatLng Lahti_Trio = new LatLng(60.9828, 25.6619);
-             LatLng Lahti_Salpaus = new LatLng(60.818522, 25.753588);
 
             PlacePoint Lahti_Sibelius1 = new PlacePoint( "Lahti_Sibelius1",60.9948f, 25.6520f);
             PlacePoint Lahti_Keskusta1    = new PlacePoint("Lahti_Keskusta1",60.9816f, 25.6601f);
             PlacePoint Lahti_Trio1 = new PlacePoint("Lahti_Trio1",60.9828f, 25.6619f);
             PlacePoint Lahti_Salpaus1 = new PlacePoint("Lahti_Salpaus1",60.818522f, 25.753588f);
 
-             locationArrayList.add(Lahti_Sibelius);
-              locationArrayList.add(Lahti_Keskusta);
-             locationArrayList.add(Lahti_Trio);
-             locationArrayList.add(Lahti_Salpaus);
 
             placePointsArrayList.add(Lahti_Sibelius1);
             placePointsArrayList.add(Lahti_Keskusta1);
@@ -71,17 +62,12 @@ public class GMapsFragment extends Fragment {
             placePointsArrayList.add(Lahti_Salpaus1);
 
 
-             locationArrayList.forEach(( l->{
-                   Log.i("myLocationArrayList", l.toString());
-                    mMap.addMarker(new MarkerOptions().position(l).title(" Our Address"));
-            }));
-
             placePointsArrayList.forEach((p->{
                 try {
                     Log.i("placePointsArrayList", p.toString());
-                    LatLng d = new LatLng(p.getPlaceLatitude(),p.getPlaceLongitude());
+                    LatLng d = new LatLng(p.getPlaceLongitude(),p.getPlaceLatitude());
                     Log.i("myD", d.toString());
-                    mMap.addMarker(new MarkerOptions().position(d).title("hello"));
+                    mMap.addMarker(new MarkerOptions().position(d).title(p.getPlaceName()));
                 }
                 catch ( Exception e) {
                     Log.d("sorry", String.valueOf(e));
