@@ -47,23 +47,46 @@ public class GMapsFragment extends Fragment {
             mMap = googleMap;
 
             //just for test
-            ArrayList<LatLng> locationArrayList = new ArrayList<>();
-            
-            LatLng Lahti_Sibelius = new LatLng(60.9948, 25.6520);
+             ArrayList<LatLng> locationArrayList = new ArrayList<>();
+            ArrayList<PlacePoint> placePointsArrayList = new ArrayList<>();
+
+             LatLng Lahti_Sibelius = new LatLng(60.9948, 25.6520);
             LatLng Lahti_Keskusta    = new LatLng(60.9816, 25.6601);
             LatLng Lahti_Trio = new LatLng(60.9828, 25.6619);
-            LatLng Lahti_Salpaus = new LatLng(60.818522, 25.753588);
+             LatLng Lahti_Salpaus = new LatLng(60.818522, 25.753588);
 
-            locationArrayList.add(Lahti_Sibelius);
-            locationArrayList.add(Lahti_Keskusta);
-            locationArrayList.add(Lahti_Trio);
-            locationArrayList.add(Lahti_Salpaus);
+            PlacePoint Lahti_Sibelius1 = new PlacePoint( "Lahti_Sibelius1",60.9948f, 25.6520f);
+            PlacePoint Lahti_Keskusta1    = new PlacePoint("Lahti_Keskusta1",60.9816f, 25.6601f);
+            PlacePoint Lahti_Trio1 = new PlacePoint("Lahti_Trio1",60.9828f, 25.6619f);
+            PlacePoint Lahti_Salpaus1 = new PlacePoint("Lahti_Salpaus1",60.818522f, 25.753588f);
+
+             locationArrayList.add(Lahti_Sibelius);
+              locationArrayList.add(Lahti_Keskusta);
+             locationArrayList.add(Lahti_Trio);
+             locationArrayList.add(Lahti_Salpaus);
+
+            placePointsArrayList.add(Lahti_Sibelius1);
+            placePointsArrayList.add(Lahti_Keskusta1);
+            placePointsArrayList.add(Lahti_Trio1);
+            placePointsArrayList.add(Lahti_Salpaus1);
 
 
-            locationArrayList.forEach(( l->{
-                Log.i("myLocationArrayList", l.toString());
-                mMap.addMarker(new MarkerOptions().position(l).title(" Our Address"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(l));
+             locationArrayList.forEach(( l->{
+                   Log.i("myLocationArrayList", l.toString());
+                    mMap.addMarker(new MarkerOptions().position(l).title(" Our Address"));
+            }));
+
+            placePointsArrayList.forEach((p->{
+                try {
+                    Log.i("placePointsArrayList", p.toString());
+                    LatLng d = new LatLng(p.getPlaceLatitude(),p.getPlaceLongitude());
+                    Log.i("myD", d.toString());
+                    mMap.addMarker(new MarkerOptions().position(d).title("hello"));
+                }
+                catch ( Exception e) {
+                    Log.d("sorry", String.valueOf(e));
+                }
+
             }));
 
             //LAHTI 60.98543428468401, 25.663712747153326
