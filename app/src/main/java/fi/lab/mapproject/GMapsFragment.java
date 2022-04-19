@@ -44,8 +44,8 @@ public class GMapsFragment extends Fragment {
             //LAHTI 60.98543428468401, 25.663712747153326
             //LAB 61.00655692042178, 25.66437080484379
             LatLng lab = new LatLng(61.00655692042178, 25.66437080484379);
-            googleMap.addMarker(new MarkerOptions().position(lab).title("LAB University of Applied Sciences"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(lab));
+            mMap.addMarker(new MarkerOptions().position(lab).title("LAB University of Applied Sciences"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(lab));
         }
     };
 
