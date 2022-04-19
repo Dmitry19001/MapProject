@@ -14,7 +14,12 @@ public class PlacePoint {
 
     public PlacePoint( String name, double longitude, double latitude) {
         placeId = UUID.randomUUID().toString();
-        placeName = name;
+        if (name.trim().length() > 0){
+            placeName = name;
+        }
+        else{
+            placeName= "Unknown";
+        }
         placeLongitude = longitude;
         placeLatitude = latitude;
     }
