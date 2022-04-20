@@ -61,13 +61,18 @@ public class GMapsFragment extends Fragment {
                 @Override
                 public void onMapClick(@NonNull LatLng latLng) {
                     Log.i("map checker", "map is clicked");
+                    Log.i("map latlngchecker", latLng.toString());
+                    mMap.addMarker(new MarkerOptions().position(latLng).title("some market"));
                 }
             });
+
+
 
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(@NonNull Marker marker) {
                     Log.i("marker checker", "marker is clicked");
+                    Log.i("marker title", marker.getTitle());
                     return false;
                 }
             });
