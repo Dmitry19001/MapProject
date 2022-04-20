@@ -18,6 +18,7 @@
 
 ### UI/UX
 - [ ] Better UI
+- [ ] Better SearchView tap recognition
 
 ### Misc
 - [ ] Add more TODOs
