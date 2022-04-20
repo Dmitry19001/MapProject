@@ -49,7 +49,7 @@ public class GMapsFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
-            //just for test
+            //array list with points
             ArrayList<PlacePoint> placePointsArrayList = new ArrayList<>();
 
 
@@ -66,7 +66,7 @@ public class GMapsFragment extends Fragment {
 
             placePointsArrayList.forEach((p -> {
                 try {
-                    Log.i("placePointsArrayList", p.toString());
+                    Log.i("placePointsArrayListItem", p.toString());
                     LatLng d = new LatLng(p.getPlaceLongitude(), p.getPlaceLatitude());
                     Log.i("myD", d.toString());
                     mMap.addMarker(new MarkerOptions().position(d).title(p.getPlaceName()));
@@ -80,7 +80,6 @@ public class GMapsFragment extends Fragment {
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(@NonNull LatLng latLng) {
-                    Log.i("map checker", "map is clicked");
                     Log.i("map latlngchecker", latLng.toString());
 
                     PlacePoint newPlacePoint = new PlacePoint("some place", latLng.longitude, latLng.latitude);
@@ -94,12 +93,18 @@ public class GMapsFragment extends Fragment {
                 @Override
                 public boolean onMarkerClick(@NonNull Marker marker) {
                     Log.i("marker checker", "marker is clicked");
-                    Log.i("marker title", marker.getTitle());
                     return false;
                 }
             });
 
-
+          mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+              @Override
+              public void onInfoWindowClick(@NonNull Marker marker) {
+                  marker.remove();
+                  placePointsArrayList.remove(marker.getId());
+                  Log.i("deleteMarkerChecker", "marker is deleted");
+              }
+          });
 
 
 
