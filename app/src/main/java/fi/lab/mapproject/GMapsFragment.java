@@ -3,7 +3,9 @@ package fi.lab.mapproject;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -31,7 +34,7 @@ public class GMapsFragment extends Fragment {
 
 
 
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+    private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
          * Manipulates the map once available.
@@ -46,15 +49,33 @@ public class GMapsFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
 
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(@NonNull LatLng latLng) {
+                    Log.i("map checker", "map is clicked");
+                    Log.i("map latlngchecker", latLng.toString());
+                    mMap.addMarker(new MarkerOptions().position(latLng).title("some market"));
+                }
+            });
+
+
+
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(@NonNull Marker marker) {
+                    Log.i("marker checker", "marker is clicked");
+                    Log.i("marker title", marker.getTitle());
+                    return false;
+                }
+            });
+
             //just for test
             ArrayList<PlacePoint> placePointsArrayList = new ArrayList<>();
-
 
             PlacePoint Lahti_Sibelius1 = new PlacePoint( "Lahti_Sibelius1", new LatLng(60.9948f, 25.6520f));
             PlacePoint Lahti_Keskusta1    = new PlacePoint("Lahti_Keskusta1", new LatLng(60.9816f, 25.6601f));
             PlacePoint Lahti_Trio1 = new PlacePoint("Lahti_Trio1", new LatLng(60.9828f, 25.6619f));
             PlacePoint Lahti_Salpaus1 = new PlacePoint("Lahti_Salpaus1", new LatLng(60.818522f, 25.753588f));
-
 
             placePointsArrayList.add(Lahti_Sibelius1);
             placePointsArrayList.add(Lahti_Keskusta1);
