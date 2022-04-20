@@ -11,21 +11,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
 
-public class GMapsFragment extends Fragment {
+public class GMapsFragment extends Fragment implements
+        GoogleMap.OnMarkerClickListener {
 
     private SearchView searchView;
     GoogleMap mMap;
+
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -113,6 +117,25 @@ public class GMapsFragment extends Fragment {
                 //searchView.
                 return false;
             }
+
         });
+    }
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+        // TODO: NEED TO MAKE IT WORK (EVENT NOT SHOOTING OR TOAST DOESN'T WORK)
+        // Retrieve the data from the marker.
+        Integer clickCount = (Integer) marker.getTag();
+        // Check if a click count was set, then display the click count.
+        if (clickCount != null) {
+            clickCount = clickCount + 1;
+            marker.setTag(clickCount);
+            Toast.makeText(getActivity().getApplicationContext(), marker.getTitle() + "has been clicked " + clickCount + " times.", Toast.LENGTH_SHORT).show();
+        }
+
+        // Return false to indicate that we have not consumed the event and that we wish
+        // for the default behavior to occur (which is for the camera to move such that the
+        // marker is centered and for the marker's info window to open, if it has one).
+        return false;
     }
 }

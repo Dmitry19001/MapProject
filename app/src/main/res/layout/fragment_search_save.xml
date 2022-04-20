@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#ECECEC"
-        android:queryHint="@string/searchQueryHint">
-    </SearchView>
+        android:contextClickable="true"
+        android:queryHint="@string/searchQueryHint"></SearchView>
 
     <Button
         android:id="@+id/saveButton"
