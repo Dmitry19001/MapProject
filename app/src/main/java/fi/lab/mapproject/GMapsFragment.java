@@ -2,8 +2,11 @@ package fi.lab.mapproject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -30,8 +34,8 @@ public class GMapsFragment extends Fragment {
     GoogleMap mMap;
 
 
+    private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
          * Manipulates the map once available.
@@ -45,15 +49,37 @@ public class GMapsFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
+           // LatLng latLng;
+
+            //public void onMapClick (LatLng latLng){
+                //MarkerOptions marker = new MarkerOptions()
+               //         .position(latLng);
+             //   this.googleMap.addMarker(marker);
+           // }
+
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(@NonNull LatLng latLng) {
+                    Log.i("map checker", "map is clicked");
+                }
+            });
+
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(@NonNull Marker marker) {
+                    Log.i("marker checker", "marker is clicked");
+                    return false;
+                }
+            });
 
             //just for test
             ArrayList<PlacePoint> placePointsArrayList = new ArrayList<>();
 
 
-            PlacePoint Lahti_Sibelius1 = new PlacePoint( "Lahti_Sibelius1",60.9948f, 25.6520f);
-            PlacePoint Lahti_Keskusta1    = new PlacePoint("Lahti_Keskusta1",60.9816f, 25.6601f);
-            PlacePoint Lahti_Trio1 = new PlacePoint("Lahti_Trio1",60.9828f, 25.6619f);
-            PlacePoint Lahti_Salpaus1 = new PlacePoint("Lahti_Salpaus1",60.818522f, 25.753588f);
+            PlacePoint Lahti_Sibelius1 = new PlacePoint("Lahti_Sibelius1", 60.9948f, 25.6520f);
+            PlacePoint Lahti_Keskusta1 = new PlacePoint("Lahti_Keskusta1", 60.9816f, 25.6601f);
+            PlacePoint Lahti_Trio1 = new PlacePoint("Lahti_Trio1", 60.9828f, 25.6619f);
+            PlacePoint Lahti_Salpaus1 = new PlacePoint("Lahti_Salpaus1", 60.818522f, 25.753588f);
 
 
             placePointsArrayList.add(Lahti_Sibelius1);
@@ -62,18 +88,18 @@ public class GMapsFragment extends Fragment {
             placePointsArrayList.add(Lahti_Salpaus1);
 
 
-            placePointsArrayList.forEach((p->{
+            placePointsArrayList.forEach((p -> {
                 try {
                     Log.i("placePointsArrayList", p.toString());
-                    LatLng d = new LatLng(p.getPlaceLongitude(),p.getPlaceLatitude());
+                    LatLng d = new LatLng(p.getPlaceLongitude(), p.getPlaceLatitude());
                     Log.i("myD", d.toString());
                     mMap.addMarker(new MarkerOptions().position(d).title(p.getPlaceName()));
-                }
-                catch ( Exception e) {
+                } catch (Exception e) {
                     Log.d("sorry", String.valueOf(e));
                 }
 
             }));
+
 
             //LAHTI 60.98543428468401, 25.663712747153326
             //LAB 61.00655692042178, 25.66437080484379
@@ -82,6 +108,8 @@ public class GMapsFragment extends Fragment {
             mMap.moveCamera(CameraUpdateFactory.newLatLng(lab));
         }
     };
+
+
 
     @Nullable
     @Override
