@@ -49,34 +49,6 @@ public class GMapsFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
-           // LatLng latLng;
-
-            //public void onMapClick (LatLng latLng){
-                //MarkerOptions marker = new MarkerOptions()
-               //         .position(latLng);
-             //   this.googleMap.addMarker(marker);
-           // }
-
-            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(@NonNull LatLng latLng) {
-                    Log.i("map checker", "map is clicked");
-                    Log.i("map latlngchecker", latLng.toString());
-                    mMap.addMarker(new MarkerOptions().position(latLng).title("some market"));
-                }
-            });
-
-
-
-            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(@NonNull Marker marker) {
-                    Log.i("marker checker", "marker is clicked");
-                    Log.i("marker title", marker.getTitle());
-                    return false;
-                }
-            });
-
             //just for test
             ArrayList<PlacePoint> placePointsArrayList = new ArrayList<>();
 
@@ -92,7 +64,6 @@ public class GMapsFragment extends Fragment {
             placePointsArrayList.add(Lahti_Trio1);
             placePointsArrayList.add(Lahti_Salpaus1);
 
-
             placePointsArrayList.forEach((p -> {
                 try {
                     Log.i("placePointsArrayList", p.toString());
@@ -104,6 +75,34 @@ public class GMapsFragment extends Fragment {
                 }
 
             }));
+
+
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(@NonNull LatLng latLng) {
+                    Log.i("map checker", "map is clicked");
+                    Log.i("map latlngchecker", latLng.toString());
+
+                    PlacePoint newPlacePoint = new PlacePoint("some place", latLng.longitude, latLng.latitude);
+                    mMap.addMarker(new MarkerOptions().position(latLng).title(newPlacePoint.getPlaceName()));
+                }
+            });
+
+
+
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(@NonNull Marker marker) {
+                    Log.i("marker checker", "marker is clicked");
+                    Log.i("marker title", marker.getTitle());
+                    return false;
+                }
+            });
+
+
+
+
+
 
 
             //LAHTI 60.98543428468401, 25.663712747153326
