@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<Place> placesList;
+    List<PlacePoint> placesList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,19 +27,19 @@ public class MainActivity extends AppCompatActivity {
     private void testPlaces(){
         //TESTING place creating
         if (placesList.isEmpty()){
-            placesList.add(new Place(0, "Home", 10 , 10));
-            placesList.add(new Place(1, "Home1", 1 , 10));
-            placesList.add(new Place(2, "Home2", 10 , 100));
-            placesList.add(new Place(3, "Home3", 100 , 10));
+            placesList.add(new PlacePoint("Home", 10 , 10));
+            placesList.add(new PlacePoint("Home1", 1 , 10));
+            placesList.add(new PlacePoint("Home2", 10 , 100));
+            placesList.add(new PlacePoint("Home3", 100 , 10));
         }
 
         //TESTING COMPARING
-        Place place1 = placesList.get(0);
-        Place place2 = placesList.get(1);
-        String comparingRes = place1.compareTo(place2) == 0 ? "True" : "False";
+        PlacePoint placePoint1 = placesList.get(0);
+        PlacePoint placePoint2 = placesList.get(1);
+        String comparingRes = placePoint1.compareTo(placePoint2) == 0 ? "True" : "False";
 
         //RESULTS
-        Toast.makeText(getApplicationContext(), String.format("%s VS %s == %s", place1, place2, comparingRes), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), String.format("%s VS %s == %s", placePoint1, placePoint2, comparingRes), Toast.LENGTH_SHORT).show();
     }
 
 }

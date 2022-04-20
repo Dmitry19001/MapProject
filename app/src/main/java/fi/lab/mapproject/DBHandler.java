@@ -43,22 +43,22 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void addPlace(Place place){
+    public void addPlace(PlacePoint placePoint){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, place.getName());
-        values.put(KEY_LAT, place.getLat());
-        values.put(KEY_LONG, place.getLong());
+        values.put(KEY_NAME, placePoint.getPlaceName());
+        values.put(KEY_LAT, placePoint.getPlaceLatitude());
+        values.put(KEY_LONG, placePoint.getPlaceLongitude());
         db.insert(TABLE_NAME, null, values);
     }
 
-    public void deletePlace(Place place){
+    public void deletePlace(PlacePoint placePoint){
         //TODO: OPTIONAL DELETING FROM DB
         //NOT PRIORITISED BECAUSE IT'S EASIER TO DELETE AND SAVE WHOLE DB
     }
 
-    public List<Place> getAllPlaces(){
-        List<Place> placesList = new LinkedList<>();
+    public List<PlacePoint> getAllPlaces(){
+        List<PlacePoint> placesList = new LinkedList<>();
         String selectQuery = "SELECT * from " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -68,9 +68,9 @@ public class DBHandler extends SQLiteOpenHelper {
             String name = cursor.getString(1);
             float lat = cursor.getFloat(2);
             float lng = cursor.getFloat(3);
-            Place place = new Place(id, name, lat, lng);
+            PlacePoint placePoint = new PlacePoint(name, lat, lng);
 
-            placesList.add(place);
+            placesList.add(placePoint);
         }
         cursor.close();
         return placesList;
