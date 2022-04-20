@@ -1,22 +1,22 @@
 package fi.lab.mapproject;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 
 public class PlacePoint implements Comparable<PlacePoint>, Serializable {
     private int id;
     private String name;
-    private float longitude;
-    private float latitude;
+    private LatLng latLng;
 
     public PlacePoint(){
-        this("Unknown", 0,0);
+        this("Unknown", new LatLng(0,0));
     }
 
-    public PlacePoint(String name, float longitude, float latitude){
+    public PlacePoint(String name, LatLng latLng){
         setPlaceId(0);
         setPlaceName(name);
-        setPlaceLatitude(latitude);
-        setPlaceLongitude(longitude);
+        setLatLng(latLng);
     }
 
     public int getPlaceId(){ return this.id; }
@@ -32,14 +32,17 @@ public class PlacePoint implements Comparable<PlacePoint>, Serializable {
         }
     }
 
-    public float getPlaceLongitude(){ return this.longitude; }
-    public void setPlaceLongitude(float longitude){
-        this.longitude = longitude;
+    public LatLng getLatLng(){ return this.latLng; }
+    public void setLatLng(LatLng latLng){ this.latLng = latLng; }
+
+    public double getPlaceLongitude(){ return this.latLng.longitude; }
+    public void setPlaceLongitude(double longitude){
+        this.latLng = new LatLng(longitude, this.latLng.latitude);
     }
 
-    public float getPlaceLatitude(){ return this.latitude; }
+    public double getPlaceLatitude(){ return this.latLng.latitude; }
     public void setPlaceLatitude(float latitude){
-        this.latitude = latitude;
+        this.latLng = new LatLng(this.latLng.longitude, latitude);
     }
 
     @Override

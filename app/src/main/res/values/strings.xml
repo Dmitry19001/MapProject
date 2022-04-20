@@ -4,4 +4,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="SaveButtonText">Save</string>
     <string name="searchQueryHint">Search place/address</string>
+    <string name="clearDatabase">Clear</string>
 </resources>

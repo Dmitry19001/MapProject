@@ -50,10 +50,10 @@ public class GMapsFragment extends Fragment {
             ArrayList<PlacePoint> placePointsArrayList = new ArrayList<>();
 
 
-            PlacePoint Lahti_Sibelius1 = new PlacePoint( "Lahti_Sibelius1",60.9948f, 25.6520f);
-            PlacePoint Lahti_Keskusta1    = new PlacePoint("Lahti_Keskusta1",60.9816f, 25.6601f);
-            PlacePoint Lahti_Trio1 = new PlacePoint("Lahti_Trio1",60.9828f, 25.6619f);
-            PlacePoint Lahti_Salpaus1 = new PlacePoint("Lahti_Salpaus1",60.818522f, 25.753588f);
+            PlacePoint Lahti_Sibelius1 = new PlacePoint( "Lahti_Sibelius1", new LatLng(60.9948f, 25.6520f));
+            PlacePoint Lahti_Keskusta1    = new PlacePoint("Lahti_Keskusta1", new LatLng(60.9816f, 25.6601f));
+            PlacePoint Lahti_Trio1 = new PlacePoint("Lahti_Trio1", new LatLng(60.9828f, 25.6619f));
+            PlacePoint Lahti_Salpaus1 = new PlacePoint("Lahti_Salpaus1", new LatLng(60.818522f, 25.753588f));
 
 
             placePointsArrayList.add(Lahti_Sibelius1);
