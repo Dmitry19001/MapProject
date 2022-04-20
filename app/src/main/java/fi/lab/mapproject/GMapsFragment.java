@@ -7,28 +7,28 @@ import androidx.fragment.app.Fragment;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 
-public class GMapsFragment extends Fragment implements
-        GoogleMap.OnMarkerClickListener {
+public class GMapsFragment extends Fragment {
 
     private SearchView searchView;
     GoogleMap mMap;
+
 
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -45,11 +45,41 @@ public class GMapsFragment extends Fragment implements
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
+
+            //just for test
+            ArrayList<PlacePoint> placePointsArrayList = new ArrayList<>();
+
+
+            PlacePoint Lahti_Sibelius1 = new PlacePoint( "Lahti_Sibelius1",60.9948f, 25.6520f);
+            PlacePoint Lahti_Keskusta1    = new PlacePoint("Lahti_Keskusta1",60.9816f, 25.6601f);
+            PlacePoint Lahti_Trio1 = new PlacePoint("Lahti_Trio1",60.9828f, 25.6619f);
+            PlacePoint Lahti_Salpaus1 = new PlacePoint("Lahti_Salpaus1",60.818522f, 25.753588f);
+
+
+            placePointsArrayList.add(Lahti_Sibelius1);
+            placePointsArrayList.add(Lahti_Keskusta1);
+            placePointsArrayList.add(Lahti_Trio1);
+            placePointsArrayList.add(Lahti_Salpaus1);
+
+
+            placePointsArrayList.forEach((p->{
+                try {
+                    Log.i("placePointsArrayList", p.toString());
+                    LatLng d = new LatLng(p.getPlaceLongitude(),p.getPlaceLatitude());
+                    Log.i("myD", d.toString());
+                    mMap.addMarker(new MarkerOptions().position(d).title(p.getPlaceName()));
+                }
+                catch ( Exception e) {
+                    Log.d("sorry", String.valueOf(e));
+                }
+
+            }));
+
             //LAHTI 60.98543428468401, 25.663712747153326
             //LAB 61.00655692042178, 25.66437080484379
             LatLng lab = new LatLng(61.00655692042178, 25.66437080484379);
-            googleMap.addMarker(new MarkerOptions().position(lab).title("LAB University of Applied Sciences"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(lab));
+            mMap.addMarker(new MarkerOptions().position(lab).title("LAB University of Applied Sciences"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(lab));
         }
     };
 
@@ -82,6 +112,7 @@ public class GMapsFragment extends Fragment implements
                 // where we will store the list of all address.
                 List<Address> addressList = null;
 
+
                 // checking if the entered location is null or not.
                 if (location != null || location.equals("")) {
                     // on below line we are creating and initializing a geo coder.
@@ -93,6 +124,10 @@ public class GMapsFragment extends Fragment implements
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
+
+
+
                     // on below line we are getting the location
                     // from our list a first position.
                     if (addressList.size() > 0) {
@@ -117,25 +152,6 @@ public class GMapsFragment extends Fragment implements
                 //searchView.
                 return false;
             }
-
         });
-    }
-
-    @Override
-    public boolean onMarkerClick(@NonNull Marker marker) {
-        // TODO: NEED TO MAKE IT WORK (EVENT NOT SHOOTING OR TOAST DOESN'T WORK)
-        // Retrieve the data from the marker.
-        Integer clickCount = (Integer) marker.getTag();
-        // Check if a click count was set, then display the click count.
-        if (clickCount != null) {
-            clickCount = clickCount + 1;
-            marker.setTag(clickCount);
-            Toast.makeText(getActivity().getApplicationContext(), marker.getTitle() + "has been clicked " + clickCount + " times.", Toast.LENGTH_SHORT).show();
-        }
-
-        // Return false to indicate that we have not consumed the event and that we wish
-        // for the default behavior to occur (which is for the camera to move such that the
-        // marker is centered and for the marker's info window to open, if it has one).
-        return false;
     }
 }
