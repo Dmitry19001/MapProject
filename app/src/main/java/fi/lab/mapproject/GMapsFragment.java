@@ -31,6 +31,7 @@ public class GMapsFragment extends Fragment {
 
     private SearchView searchView;
     private MainActivity mainActivity;
+    private Marker lastTappedMarker;
     DBHandler dbHandler;
     GoogleMap mMap;
 
@@ -148,6 +149,18 @@ public class GMapsFragment extends Fragment {
                 public boolean onMarkerClick(@NonNull Marker marker) {
                     Log.i("marker checker", "marker is clicked");
                     Log.i("marker title", marker.getTitle());
+
+                    if (lastTappedMarker != null && lastTappedMarker.equals(marker))
+                    {
+                        lastTappedMarker = null;
+                        marker.remove();
+                        Toast.makeText(mainActivity.getApplicationContext(), "Marker removed!", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        lastTappedMarker = marker;
+                        Toast.makeText(mainActivity.getApplicationContext(), "Tap one more time to remove marker", Toast.LENGTH_SHORT).show();
+                    }
+
                     return false;
                 }
             });
