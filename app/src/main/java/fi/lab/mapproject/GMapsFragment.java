@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class GMapsFragment extends Fragment {
 
@@ -66,6 +67,28 @@ public class GMapsFragment extends Fragment {
             Toast.makeText(mainActivity.getApplicationContext(), "Everything saved correctly!", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void RemovePlacePoint(Marker marker) {
+
+        //finding place from the list
+        PlacePoint toRemove = mapPlacePoints.stream()
+                .filter(item -> item.getLatLng().equals(marker.getPosition()))
+                .collect(Collectors.toList()).get(0);
+
+        //checking if everything gone ok
+        if (toRemove != null){
+            //removing from the list
+            mapPlacePoints.remove(toRemove);
+            //removing from the map
+            marker.remove();
+
+            //notification
+            Toast.makeText(mainActivity.getApplicationContext(), "Marker removed!", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(mainActivity.getApplicationContext(), "Something gone wrong!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void LoadPlacePointsFromDB(){
@@ -153,8 +176,8 @@ public class GMapsFragment extends Fragment {
                     if (lastTappedMarker != null && lastTappedMarker.equals(marker))
                     {
                         lastTappedMarker = null;
-                        marker.remove();
-                        Toast.makeText(mainActivity.getApplicationContext(), "Marker removed!", Toast.LENGTH_SHORT).show();
+
+                        RemovePlacePoint(marker);
                     }
                     else{
                         lastTappedMarker = marker;
