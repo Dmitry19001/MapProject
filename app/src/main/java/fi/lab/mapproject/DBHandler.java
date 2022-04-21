@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,8 +25,8 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String CREATE_PLACES_TABLE = "CREATE TABLE " + TABLE_NAME + "("
             + KEY_ID + " INTEGER PRIMARY KEY,"
             + KEY_NAME + " TEXT,"
-            + KEY_LAT + " FLOAT,"
-            + KEY_LONG + " FLOAT)";
+            + KEY_LAT + " DOUBLE,"
+            + KEY_LONG + " DOUBLE)";
 
     public static final String DROP_PLACES_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
@@ -43,22 +45,22 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void addPlace(Place place){
+    public void addPlacePoint(PlacePoint placePoint){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, place.getName());
-        values.put(KEY_LAT, place.getLat());
-        values.put(KEY_LONG, place.getLong());
+        values.put(KEY_NAME, placePoint.getPlaceName());
+        values.put(KEY_LAT, placePoint.getPlaceLatitude());
+        values.put(KEY_LONG, placePoint.getPlaceLongitude());
         db.insert(TABLE_NAME, null, values);
     }
 
-    public void deletePlace(Place place){
+    public void deletePlacePoint(PlacePoint placePoint){
         //TODO: OPTIONAL DELETING FROM DB
         //NOT PRIORITISED BECAUSE IT'S EASIER TO DELETE AND SAVE WHOLE DB
     }
 
-    public List<Place> getAllPlaces(){
-        List<Place> placesList = new LinkedList<>();
+    public List<PlacePoint> getAllPlacePoints(){
+        List<PlacePoint> placesList = new LinkedList<>();
         String selectQuery = "SELECT * from " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -66,17 +68,17 @@ public class DBHandler extends SQLiteOpenHelper {
         while(cursor.moveToNext()){
             int id = cursor.getInt(0);
             String name = cursor.getString(1);
-            float lat = cursor.getFloat(2);
-            float lng = cursor.getFloat(3);
-            Place place = new Place(id, name, lat, lng);
+            double lat = cursor.getDouble(2);
+            double lng = cursor.getDouble(3);
+            PlacePoint placePoint = new PlacePoint(name, new LatLng(lat, lng));
 
-            placesList.add(place);
+            placesList.add(placePoint);
         }
         cursor.close();
         return placesList;
     }
 
-    public void clearPlaces(){
+    public void clearPlacePoints(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, null, new String[]{});
     }

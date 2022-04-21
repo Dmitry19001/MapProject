@@ -2,61 +2,57 @@ package fi.lab.mapproject;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.UUID;
+import java.io.Serializable;
 
-public class PlacePoint {
+public class PlacePoint implements Comparable<PlacePoint>, Serializable {
+    private int id;
+    private String name;
+    private LatLng latLng;
 
+    public PlacePoint(){
+        this("Unknown", new LatLng(0,0));
+    }
 
-    private String placeId = UUID.randomUUID().toString();
-    private String placeName;
-    private double placeLongitude;
-    private double placeLatitude;
+    public PlacePoint(String name, LatLng latLng){
+        setPlaceId(0);
+        setPlaceName(name);
+        setLatLng(latLng);
+    }
 
-    public PlacePoint( String name, double longitude, double latitude) {
-        placeId = UUID.randomUUID().toString();
+    public int getPlaceId(){ return this.id; }
+    public void setPlaceId(int id) { this.id = id; }
+
+    public String getPlaceName(){ return this.name; }
+    public void setPlaceName(String name){
         if (name.trim().length() > 0){
-            placeName = name;
+            this.name = name;
         }
         else{
-            placeName= "Unknown";
+            this.name = "Unknown";
         }
-        placeLongitude = longitude;
-        placeLatitude = latitude;
     }
 
-    public String getPlaceId() {
-        return this.placeId;
+    public LatLng getLatLng(){ return this.latLng; }
+    public void setLatLng(LatLng latLng){ this.latLng = latLng; }
+
+    public double getPlaceLongitude(){ return this.latLng.longitude; }
+    public void setPlaceLongitude(double longitude){
+        this.latLng = new LatLng(longitude, this.latLng.latitude);
     }
 
-
-    public String getPlaceName() {
-        return this.placeName;
+    public double getPlaceLatitude(){ return this.latLng.latitude; }
+    public void setPlaceLatitude(float latitude){
+        this.latLng = new LatLng(this.latLng.longitude, latitude);
     }
 
-    public void setPlaceName(String placeName) {
-        this.placeName = placeName;
-    }
-
-    public double getPlaceLongitude() {
-        return this.placeLongitude;
-    }
-
-    public void setPlaceLongitude(double placeLongitude) {
-        this.placeLongitude = placeLongitude;
-    }
-
-    public double getPlaceLatitude() {
-        return this.placeLatitude;
-    }
-
-    public void setPlaceLatitude(double placeLatitude) {
-        this.placeLatitude = placeLatitude;
+    @Override
+    public String toString(){
+        return String.format("[%s] %s [%s, %s]", getPlaceId(), getPlaceName(), getPlaceLongitude(), getPlaceLatitude());
     }
 
 
-
+    @Override
+    public int compareTo(PlacePoint placePoint) {
+        return this.toString().compareToIgnoreCase(placePoint.toString());
+    }
 }
-
-
-
-

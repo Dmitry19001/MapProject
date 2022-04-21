@@ -1,45 +1,62 @@
 package fi.lab.mapproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainer;
+import androidx.fragment.app.FragmentContainerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<Place> placesList;
+//    List<PlacePoint> placePointsList;
+    DBHandler dbHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        placesList = new LinkedList<>();
+        //Initializing database
+        dbHandler = new DBHandler(this);
+        //Initializing list of PlacePoints
+//        placePointsList = new LinkedList<>();
     }
 
-    public void saveToDB(View view) {
-        testPlaces();
+    @Override
+    protected void onDestroy() {
+        dbHandler.close();
+        super.onDestroy();
     }
 
-    private void testPlaces(){
-        //TESTING place creating
-        if (placesList.isEmpty()){
-            placesList.add(new Place(0, "Home", 10 , 10));
-            placesList.add(new Place(1, "Home1", 1 , 10));
-            placesList.add(new Place(2, "Home2", 10 , 100));
-            placesList.add(new Place(3, "Home3", 100 , 10));
-        }
-
-        //TESTING COMPARING
-        Place place1 = placesList.get(0);
-        Place place2 = placesList.get(1);
-        String comparingRes = place1.compareTo(place2) == 0 ? "True" : "False";
-
-        //RESULTS
-        Toast.makeText(getApplicationContext(), String.format("%s VS %s == %s", place1, place2, comparingRes), Toast.LENGTH_SHORT).show();
-    }
-
+//    public void saveToDB(View view) {
+//        PlacePoint pp = new PlacePoint("Home", new LatLng(10, 10));
+//
+//        if (gMapsFragment == null){
+//            Toast.makeText(getApplicationContext(), "gMapsFragment is null", Toast.LENGTH_SHORT).show();
+//        }
+//        else {
+//            Toast.makeText(getApplicationContext(), gMapsFragment.toString(), Toast.LENGTH_SHORT).show();
+//        }
+//    }
+//
+//    public void clearDB(View view) {
+//        if (!dbHandler.getAllPlacePoints().isEmpty()){
+//            dbHandler.clearPlacePoints();
+//            gMapsFragment
+//            gMapsFragment.ClearMapMarkersAndDB();
+//            Toast.makeText(getApplicationContext(),  String.format("Database is clean now! gmaps_len: %s", gMapsFragment.mapPlacePoints.size()), Toast.LENGTH_SHORT).show();
+//        }
+//        else
+//        {
+//            Toast.makeText(getApplicationContext(), "Database is already clean!", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 }
