@@ -127,8 +127,6 @@ public class GMapsFragment extends Fragment {
             //getting DBHandler from main activity for further use
             dbHandler = mainActivity.dbHandler;
 
-            Toast.makeText(mainActivity.getApplicationContext(), "DBHandler is set up", Toast.LENGTH_SHORT).show();
-
             mMap = googleMap;
 
             mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -268,9 +266,12 @@ public class GMapsFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                Log.i("Search", "Starting search: " + query);
                 // on below line we are getting the
                 // location name from search view.
                 String location = searchView.getQuery().toString();
+
+                Log.i("Search", "Search query: " + location);
 
                 // below line is to create a list of address
                 // where we will store the list of all address.
@@ -278,14 +279,17 @@ public class GMapsFragment extends Fragment {
 
 
                 // checking if the entered location is null or not.
-                if (location.equals("")) {
+                if (!location.equals("")) {
+                    Log.i("Search", "Location is not null");
                     // on below line we are creating and initializing a geo coder.
                     Geocoder geocoder = new Geocoder(getActivity());
                     try {
                         // on below line we are getting location from the
                         // location name and adding that location to address list.
+                        Log.i("Search", "Geocoder search");
                         addressList = geocoder.getFromLocationName(location, 1);
                     } catch (IOException e) {
+                        Log.i("Search exception", "fuck");
                         e.printStackTrace();
                     }
 
@@ -294,7 +298,9 @@ public class GMapsFragment extends Fragment {
 
                     // on below line we are getting the location
                     // from our list a first position.
+                    Log.i("Search", "Checking addresslist size");
                     if (addressList.size() > 0) {
+                        Log.i("Search", "Size ok");
                         Address address = addressList.get(0);
 
                         // on below line we are creating a variable for our location
