@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:background="#ECECEC"
         android:contextClickable="true"
-        android:queryHint="@string/searchQueryHint" />
+        android:queryHint="@string/searchQueryHint"
+        android:iconifiedByDefault="false"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,8 +26,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="5dp"
-            android:rotation="0"
-            android:rotationX="0"
             android:text="@string/SaveButtonText"
             app:icon="@android:drawable/ic_menu_save"
             app:iconTint="#FFFFFF"
