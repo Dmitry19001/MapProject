@@ -100,10 +100,9 @@ public class GMapsFragment extends Fragment {
             for (PlacePoint pp : mapPlacePoints){
                 mMap.addMarker(new MarkerOptions().position(pp.getLatLng()).title(pp.getPlaceName()));
             }
+            //Zooming camera to last point in the list
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(mapPlacePoints.get(mapPlacePoints.size() - 1).getLatLng()));
         }
-
-        //Zooming camera to last point in the list
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(mapPlacePoints.get(mapPlacePoints.size() - 1).getLatLng()));
     }
 
 
@@ -183,6 +182,15 @@ public class GMapsFragment extends Fragment {
                     }
 
                     return false;
+                }
+            });
+
+            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(@NonNull Marker marker) {
+                    marker.remove();
+                    mapPlacePoints.remove(marker.getId());
+                    Log.i("deleteMarkerChecker", "marker is deleted");
                 }
             });
 
